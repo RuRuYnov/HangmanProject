@@ -72,23 +72,48 @@ func display(a int, b int) {
 	}
 }
 
-func affichage() {
+func affichage(cache string, mot string) {
 	// permet d'afficher le bon pendu selon le nombre de faute, le fichier texte fonctionnant 8 par 8
 	faute := 0
-	for i := 0; i <= 8; i++ {
-		if faute == 0 {
-			display(0, 8)
-			faute = 1
-		} else {
-			display(faute*8, (faute*8)+8)
-			faute += 1
+	if faute == 0 {
+		display(0, 8)
+		faute = 1
+	} else {
+		display(faute*8, (faute*8)+8)
+		faute += 1
+	}
+	if faute < 10 {
+		fmt.Println("Mot caché:", cache)
+		input(cache, mot)
+	}
+}
+
+func input(cache string, mot string) {
+	var i rune
+	mot1 := []rune{}
+	cache1 := []rune{}
+	fmt.Print("Devinez une lettre \n")
+	fmt.Scan(&i)
+	for _, lettreeeee := range mot {
+		mot1 = append(mot1, rune(lettreeeee))
+	}
+	for _, caca := range cache {
+		cache1 = append(cache1, rune(caca))
+	}
+	for o := 0; o <= len(mot1)-1; o++ {
+		if i == mot1[o] {
+			cache1[o] = i
+			fmt.Println(string(cache1))
 		}
 	}
+	cache = string(cache1)
+	fmt.Print(cache)
+	affichage(cache, mot)
 }
 
 func main() {
 	mot := random()
 	cache := motcache(mot)
 	fmt.Println("Mot caché:", cache)
-	display(64, 72)
+	input(cache, mot)
 }
